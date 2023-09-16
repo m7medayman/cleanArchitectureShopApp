@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'responses.g.dart';
@@ -8,6 +9,14 @@ class BasicResponse {
   int? status;
   @JsonKey(name: 'message')
   String? message;
+}
+
+@JsonSerializable()
+class SimpleMessageRes extends BasicResponse {
+  SimpleMessageRes();
+  factory SimpleMessageRes.fromJson(Map<String, dynamic> json) =>
+      _$SimpleMessageResFromJson(json);
+  Map<String, dynamic> toJson() => _$SimpleMessageResToJson(this);
 }
 
 @JsonSerializable()
@@ -34,7 +43,7 @@ class CustomerRes {
   @JsonKey(name: 'name')
   String? name;
   @JsonKey(name: 'id')
-  int? id;
+  String? id;
   @JsonKey(name: 'numberOfNotifications')
   int? numberOfNotifications;
   CustomerRes(

@@ -17,6 +17,17 @@ Map<String, dynamic> _$BasicResponseToJson(BasicResponse instance) =>
       'message': instance.message,
     };
 
+SimpleMessageRes _$SimpleMessageResFromJson(Map<String, dynamic> json) =>
+    SimpleMessageRes()
+      ..status = json['status'] as int?
+      ..message = json['message'] as String?;
+
+Map<String, dynamic> _$SimpleMessageResToJson(SimpleMessageRes instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'message': instance.message,
+    };
+
 ContactsRes _$ContactsResFromJson(Map<String, dynamic> json) => ContactsRes(
       json['phone'] as String?,
       json['email'] as String?,
@@ -32,7 +43,7 @@ Map<String, dynamic> _$ContactsResToJson(ContactsRes instance) =>
 
 CustomerRes _$CustomerResFromJson(Map<String, dynamic> json) => CustomerRes(
       json['name'] as String?,
-      json['id'] as int?,
+      json['id'] as String?,
       json['numberOfNotifications'] as int?,
     );
 

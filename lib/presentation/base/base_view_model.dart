@@ -1,4 +1,3 @@
-import 'dart:async';
 
 abstract class BaseViewModel extends BaseInput with BaseOutput {}
 

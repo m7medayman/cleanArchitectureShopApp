@@ -1,3 +1,3 @@
 class AppConstant {
-  static int splashDelay = 2;
+  static int splashDelay = 3;
 }
