@@ -13,7 +13,7 @@ class _AppServiceClient implements AppServiceClient {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://5ke5z.wiremockapi.cloud/';
+    baseUrl ??= 'https://identitytoolkit.googleapis.com/v1/';
   }
 
   final Dio _dio;
@@ -21,31 +21,64 @@ class _AppServiceClient implements AppServiceClient {
   String? baseUrl;
 
   @override
-  Future<AuthenticationRes> login(
+  Future<SignUpRes> signUp(
     String email,
-    String password,
-  ) async {
+    String password, {
+    dynamic returnSecureToken = true,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = {
       'email': email,
       'password': password,
+      'returnSecureToken': returnSecureToken,
     };
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<AuthenticationRes>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<SignUpRes>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'customers/login',
+              'accounts:signUp?key=AIzaSyDHcCvtpSzcEjXZtUHi4z46KCLLvxCE8x0',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = AuthenticationRes.fromJson(_result.data!);
+    final value = SignUpRes.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<SimpleMessageRes> login(
+    String email,
+    String password, {
+    dynamic returnSecureToken = true,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {
+      'email': email,
+      'password': password,
+      'returnSecureToken': returnSecureToken,
+    };
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<SimpleMessageRes>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              'accounts:signInWithPassword?key=AIzaSyDHcCvtpSzcEjXZtUHi4z46KCLLvxCE8x0',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SimpleMessageRes.fromJson(_result.data!);
     return value;
   }
 

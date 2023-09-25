@@ -10,3 +10,14 @@ class CodeState extends Equatable {
 class CodeInitial extends CodeState {
   const CodeInitial();
 }
+
+class CodeLoading extends CodeState {}
+
+class CodeError extends CodeState {
+  final String error;
+  const CodeError(this.error);
+  @override
+  List<Object> get props => [error];
+}
+
+class CodeSuccess extends CodeState {}

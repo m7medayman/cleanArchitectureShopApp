@@ -1,4 +1,5 @@
 class AppStrings {
+  static const signUP = "Sign up";
   static const emailSubmit = "email submit";
   static const noRouteFound = "noRouteFound";
   static const onBoardingTitle1 = "on_boarding_title1";

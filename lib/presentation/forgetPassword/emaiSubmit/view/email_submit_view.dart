@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mvvm_shop/app/di.dart';
-import 'package:mvvm_shop/domain/use_case/forget_password_use_case.dart';
 import 'package:mvvm_shop/presentation/forgetPassword/emaiSubmit/cubit/email_freezed.dart';
 import 'package:mvvm_shop/presentation/forgetPassword/emaiSubmit/cubit/email_submit_cubit.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';

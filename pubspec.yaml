@@ -50,6 +50,8 @@ dependencies:
   equatable: ^2.0.5
   get_it: ^7.6.4
   lottie: ^2.6.0
+  intl_phone_number_input: ^0.7.3
+  image_picker: ^1.0.4
  
 
 dev_dependencies:

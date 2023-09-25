@@ -1,30 +1,48 @@
 import 'package:mvvm_shop/app/extensions.dart';
+import 'package:mvvm_shop/data/model/responses.dart';
 import 'package:mvvm_shop/data/responses/responses.dart';
-
-import '../../model/models.dart';
-
-extension CustomerMapper on CustomerRes? {
-  Customer toDomain() {
-    return Customer(this?.id.orEmpty() ?? '', this?.name.orEmpty() ?? '',
-        this?.numberOfNotifications.orZero() ?? 0);
-  }
-}
-
-extension ContactsMapper on ContactsRes? {
-  Contacts toDomain() {
-    return Contacts(this?.email.orEmpty() ?? '', this?.link.orEmpty() ?? '',
-        this?.phone.orEmpty() ?? '');
-  }
-}
-
-extension AuthenticationMapper on AuthenticationRes? {
-  Authentication toDomain() {
-    return Authentication(this?.contacts.toDomain(), this?.customer.toDomain());
-  }
-}
 
 extension ApiMessageMapper on SimpleMessageRes? {
   ApiMessage toDomain() {
-    return ApiMessage(this?.status.orZero(), this?.message.orEmpty());
+    return ApiMessage(
+      idToken: (this?.refreshToken).orEmpty(),
+      expiresIn: (this?.expiresIn).orEmpty(),
+      refreshToken: (this?.refreshToken).orEmpty(),
+    );
+  }
+}
+
+extension SignUpResMapper on SignUpRes? {
+  SignUpDomainRes toDomain() {
+    return SignUpDomainRes(
+        email: (this?.email).orEmpty(),
+        idToken: (this?.idToken).orEmpty(),
+        expiresIn: (this?.expiresIn).orEmpty(),
+        localld: (this?.localld).orEmpty(),
+        refreshToken: (this?.refreshToken).orEmpty());
+  }
+}
+
+abstract class Mapper<I, O> {
+  O toDomain();
+}
+
+class SimpleMessageMapper implements Mapper<SimpleMessageRes?, ApiMessage> {
+  SimpleMessageRes? input;
+  SimpleMessageMapper({
+    this.input,
+  });
+  @override
+  ApiMessage toDomain() {
+    return ApiMessage(
+        expiresIn: (input?.expiresIn).orEmpty(),
+        idToken: (input?.idToken).orEmpty(),
+        refreshToken: (input?.refreshToken).orEmpty());
+  }
+}
+
+dynamic toDomainGeneral(dynamic apiResponse) {
+  if (apiResponse is SimpleMessageRes?) {
+    return SimpleMessageMapper(input: apiResponse).toDomain();
   }
 }

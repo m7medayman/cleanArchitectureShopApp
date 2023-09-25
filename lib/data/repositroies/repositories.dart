@@ -2,6 +2,8 @@ import 'package:either_dart/src/either.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mvvm_shop/data/data_source/remote_data_source.dart';
 import 'package:mvvm_shop/data/mappers/mappers.dart';
+import 'package:mvvm_shop/data/model/requests_model.dart';
+import 'package:mvvm_shop/data/model/responses.dart';
 import 'package:mvvm_shop/data/network/error_hadler.dart';
 import 'package:mvvm_shop/data/network/failure.dart';
 import 'package:mvvm_shop/data/network/network_info.dart';
@@ -15,21 +17,8 @@ class RepositoryImp implements Repository {
 
   RepositoryImp(this._networkInfo, this._remoteDataSource);
   @override
-  Future<Either<Failure, Authentication>> login(
-      LoginRequest loginRequest) async {
-    if (await _networkInfo.isConnected()) {
-      try {
-        AuthenticationRes response =
-            await _remoteDataSource.login(loginRequest);
-        print(response.toDomain());
-        return Right(response.toDomain());
-      } catch (e) {
-        print(e);
-        return Left(ErrorHandler.handle(e).failure);
-      }
-    } else {
-      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
-    }
+  Future<Either<Failure, ApiMessage>> login(LoginRequest loginRequest) async {
+    return executeApiRequest(loginRequest, _remoteDataSource.login);
   }
 
   @override
@@ -48,7 +37,7 @@ class RepositoryImp implements Repository {
     return apiResponse.map((response) => response as ApiMessage);
   }
 
-  Future<Either<Failure, ApiResponse>> _apiRequest(Future request) async {
+  Future<Either<Failure, ApiMessage>> _apiRequest(Future request) async {
     if (await _networkInfo.isConnected()) {
       try {
         final response = await request;
@@ -60,6 +49,71 @@ class RepositoryImp implements Repository {
         }
       } catch (e) {
         print(e);
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, SignUpDomainRes>> signUp(
+      SignUpRequest signUpRequest) async {
+    if (await _networkInfo.isConnected()) {
+      print("!!!!!!!!!");
+      try {
+        final response = await _remoteDataSource.signUp(signUpRequest);
+        if (response.error == null) {
+          return Right(response.toDomain());
+        } else {
+          return Left(
+              Failure(response.error!.errorCode, response.error!.errorMessage));
+        }
+      } catch (e) {
+        print(e.toString());
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  Future<Either<Failure, T>> executeApiRequest<U, T>(
+      U signUpRequest, Function executeFunction) async {
+    if (await _networkInfo.isConnected()) {
+      try {
+        final response = await executeFunction(signUpRequest);
+
+        if (response.error == null) {
+          return Right(toDomainGeneral(response));
+        } else {
+          return Left(
+              ErrorHandler.handle(response.error!.errorMessage).failure);
+        }
+      } catch (e) {
+        print(e.toString());
+        return Left(ErrorHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserProfileRes>> postUserData(
+      String userId, UserProfileRequest userProfileRequest) async {
+    if (await _networkInfo.isConnected()) {
+      try {
+        final response =
+            await _remoteDataSource.postUserData(userProfileRequest, userId);
+        if (response.error == null) {
+          return Right(response);
+        } else {
+          return Left(
+              ErrorHandler.handle(response.error!.errorMessage).failure);
+        }
+      } catch (e) {
+        print(e.toString());
         return Left(ErrorHandler.handle(e).failure);
       }
     } else {

@@ -11,8 +11,8 @@ part 'email_submit_state.dart';
 class EmailSubmitCubit extends Cubit<FreezedEmailState> {
   late EmailSubmitUseCase emailUseCase;
   EmailSubmitCubit() : super(FreezedEmailState()) {
-    initEmailSubmittingModule();
-    emailUseCase = instance<EmailSubmitUseCase>();
+    initEmailSubmittingModule()
+        .whenComplete(() => emailUseCase = instance<EmailSubmitUseCase>());
   }
 
   onEmailChange(String emailField) {

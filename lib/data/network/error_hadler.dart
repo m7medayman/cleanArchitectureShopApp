@@ -117,8 +117,9 @@ Failure _handleError(DioException dioError) {
       return DataSource.CANCEL.getFailure();
     case DioExceptionType.badResponse:
       if (dioError.response != null) {
+        Map error = dioError.response!.data["error"];
         return Failure(dioError.response!.statusCode.orZero(),
-            dioError.response!.statusMessage.orEmpty());
+            (error["message"].toString()).orEmpty());
       } else {
         return DataSource.DEFAULT.getFailure();
       }
