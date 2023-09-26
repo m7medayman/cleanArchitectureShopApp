@@ -26,7 +26,10 @@ class UserRequestBody {
   toJson() {
     Map<String, dynamic> data = {
       'fields': {
-        "email": {"stringValue": email}
+        "email": {"stringValue": email},
+         "userName": {"stringValue": userName},
+          "phone": {"stringValue": phone},
+           "imageUrl": {"stringValue": imageUrl}
       }
     };
     return jsonEncode(data);

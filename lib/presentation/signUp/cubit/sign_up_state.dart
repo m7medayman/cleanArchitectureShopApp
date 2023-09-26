@@ -14,6 +14,30 @@ class SignUpState extends Equatable {
       required this.imageUrl,
       required this.password,
       required this.userName});
+
+  getEmailValidatorText() {
+    return FormValidator.getEmailValidatorText(email);
+  }
+
+  getPasswordValidatorText() {
+    return FormValidator.getPasswordValidatorText(password);
+  }
+
+  getUserNameValidatorText() {
+    return FormValidator.getFieldValidatorText(userName, "User Name");
+  }
+
+  getPhoneValidatorText() {
+    return FormValidator.getFieldValidatorText(phone, 'phone');
+  }
+
+  bool isFormValid() {
+    return (FormValidator.isEmailValid(email) &&
+        FormValidator.isPasswordValid(password) &&
+        FormValidator.isFieldValid(userName) &&
+        FormValidator.isFieldValid(phone));
+  }
+
   @override
   List get props =>
       [email, userName, password, imageUrl, signUpFormState, phone];

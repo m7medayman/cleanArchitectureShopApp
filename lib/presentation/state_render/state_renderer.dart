@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
@@ -7,10 +6,10 @@ import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
 import 'package:mvvm_shop/presentation/resources/styles_manager.dart';
 import 'package:mvvm_shop/presentation/resources/values_manager.dart';
 
-enum StateType {
+enum StateScreens {
 //popup state
   popupLoadingState,
-  popupSuccessState,
+  SuccesspopupState,
   popupErrorState,
 // full page state
   emptyPageState,
@@ -20,7 +19,7 @@ enum StateType {
 
 class StateRenderer extends StatelessWidget {
   String message;
-  StateType stateType;
+  StateScreens stateType;
   Function? retryFunc;
   bool isPopup;
   StateRenderer(
@@ -36,13 +35,14 @@ class StateRenderer extends StatelessWidget {
   }
 }
 
-Widget _getDialog(StateType stateType, String message, BuildContext context) {
+Widget _getDialog(
+    StateScreens stateType, String message, BuildContext context) {
   switch (stateType) {
-    case StateType.popupErrorState:
+    case StateScreens.popupErrorState:
       return _errorPopupDialog(message, context);
-    case StateType.loadingPageState:
+    case StateScreens.loadingPageState:
       return _loadingPopupDialog(message);
-    case StateType.popupSuccessState:
+    case StateScreens.SuccesspopupState:
       return _SuccessPopupDialog(message);
     default:
       return _loadingPopupDialog(message);

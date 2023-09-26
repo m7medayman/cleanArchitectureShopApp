@@ -35,18 +35,18 @@ class _LoginViewState extends State<LoginView> {
           builder: (context, state) {
             final state1 = state.authState.props;
             if (state.authState is AuthLoading) {
-              StateType.popupLoadingState
+              StateScreens.popupLoadingState
                   .getPopupDialog(AppStrings.loading, context);
               return _body();
             }
             if (state.authState is AuthFailure) {
-              StateType.popupErrorState
+              StateScreens.popupErrorState
                   .getPopupDialog(state1.first.toString(), context);
               return _body();
             }
             if (state.authState is AuthSuccess) {
-              StateType.popupSuccessState
-                  .getPopupDialog(AppStrings.success, context);
+              StateScreens.SuccesspopupState.getPopupDialog(
+                  AppStrings.success, context);
               return _body();
             }
             return _body();

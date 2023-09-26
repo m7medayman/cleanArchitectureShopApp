@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_shop/presentation/state_render/state_renderer.dart';
 
-extension GetState on StateType {
+extension GetState on StateScreens {
   getWidget({required String message}) {
     switch (this) {
-      case StateType.emptyPageState:
+      case StateScreens.emptyPageState:
         return StateRenderer(message: message, stateType: this);
-      case StateType.errorPageState:
+      case StateScreens.errorPageState:
         return StateRenderer(message: message, stateType: this);
-      case StateType.loadingPageState:
+      case StateScreens.loadingPageState:
         return StateRenderer(message: message, stateType: this);
-      case StateType.popupErrorState:
+      case StateScreens.popupErrorState:
         return StateRenderer(
           message: message,
           stateType: this,
           isPopup: true,
         );
-      case StateType.popupLoadingState:
+      case StateScreens.popupLoadingState:
         return StateRenderer(
           message: message,
           stateType: this,
           isPopup: true,
         );
-      case StateType.popupSuccessState:
+      case StateScreens.SuccesspopupState:
         return StateRenderer(
           message: message,
           stateType: this,
@@ -51,17 +51,19 @@ extension GetState on StateType {
 }
 
 executeShowDialog(StateRenderer stateDialog, BuildContext context) {
-  StateType type = stateDialog.stateType;
-  if (type == StateType.popupSuccessState ||
-      type == StateType.popupErrorState) {
+  StateScreens type = stateDialog.stateType;
+  if (type == StateScreens.SuccesspopupState ||
+      type == StateScreens.popupErrorState) {
     dismissDialog(context);
     WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (BuildContext context) => stateDialog,
         ));
   } else {
     WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
           context: context,
+          barrierDismissible: false,
           builder: (BuildContext context) => stateDialog,
         ));
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_shop/presentation/forgetPassword/emaiSubmit/view/email_submit_view.dart';
 import 'package:mvvm_shop/presentation/login/view/login_view.dart';
-import 'package:mvvm_shop/presentation/signUp/signUp_view.dart';
+import 'package:mvvm_shop/presentation/signUp/view/signUp_view.dart';
 import 'package:mvvm_shop/presentation/spalsh/splash_view.dart';
 
 import '../onboarding/view/onboarding_view.dart';

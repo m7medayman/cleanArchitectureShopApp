@@ -1,14 +1,19 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:mvvm_shop/app/extensions.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
 import 'package:mvvm_shop/presentation/resources/color_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
 import 'package:mvvm_shop/presentation/resources/values_manager.dart';
+import 'package:mvvm_shop/presentation/signUp/cubit/form_state.dart';
 import 'package:mvvm_shop/presentation/signUp/cubit/sign_up_cubit.dart';
+import 'package:mvvm_shop/presentation/state_render/state_renderer.dart';
+import 'package:mvvm_shop/presentation/state_render/state_renderer_imp.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -21,17 +26,38 @@ class _SignUpViewState extends State<SignUpView> {
   final ImagePicker _picker = ImagePicker();
   late SignUpCubit signUpC;
   File? imageFile;
+  var _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SignUpCubit(),
-      child: Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              child: _screenLayout(),
-            ),
+        create: (context) => SignUpCubit(),
+        child: Scaffold(
+          body: BlocBuilder<SignUpCubit, SignUpState>(
+            builder: (context, state) {
+              SignUpFormState? signUpState = state.signUpFormState;
+              if (signUpState is FailureFormState) {
+                StateScreens.popupErrorState.getPopupDialog(
+                    signUpState!.props.first.toString(), context);
+              }
+              if (signUpState is SuccessFormState) {
+                StateScreens.SuccesspopupState.getPopupDialog(
+                    AppStrings.ok, context);
+              }
+              if (signUpState is LoadingFormState) {
+                StateScreens.popupLoadingState
+                    .getPopupDialog(AppStrings.loading, context);
+              }
+              return _body();
+            },
           ),
+        ));
+  }
+
+  SafeArea _body() {
+    return SafeArea(
+      child: Center(
+        child: SingleChildScrollView(
+          child: _screenLayout(),
         ),
       ),
     );
@@ -47,39 +73,41 @@ class _SignUpViewState extends State<SignUpView> {
   }
 
   _form() {
-    return Container(
-      child: BlocBuilder<SignUpCubit, SignUpState>(
-        builder: (context, state) {
-          signUpC = context.read<SignUpCubit>();
-          return Column(
-            children: [
-              _avatar(),
-              _inputFiled(AppStrings.username, (value) {
-                signUpC.setUserName(value);
-              }),
-              _inputFiled(AppStrings.emailHint, (value) {
-                signUpC.setEmail(value);
-              }),
-              _inputFiled(AppStrings.password, (value) {
-                signUpC.setPassword(value);
-              }),
-              _inputFiled(AppStrings.password, (value) {}),
-              _phonePicker(),
-              stretchedElevatedButton(AppStrings.signUP),
-              const SizedBox(
-                height: AppSize.s20,
-              )
-            ],
-          );
-        },
-      ),
+    return BlocBuilder<SignUpCubit, SignUpState>(
+      builder: (context, state) {
+        signUpC = context.read<SignUpCubit>();
+        return Column(
+          children: [
+            _avatar(),
+            Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    _inputFiled(AppStrings.username, signUpC.setUserName,
+                        state.getUserNameValidatorText),
+                    _inputFiled(AppStrings.emailHint, signUpC.setEmail,
+                        state.getEmailValidatorText),
+                    _inputFiled(AppStrings.password, signUpC.setPassword,
+                        state.getPasswordValidatorText),
+                  ],
+                )),
+            _phonePicker(),
+            stretchedElevatedButton(AppStrings.signUP),
+            const SizedBox(
+              height: AppSize.s20,
+            )
+          ],
+        );
+      },
     );
   }
 
   ElevatedButton stretchedElevatedButton(String s) {
     return ElevatedButton(
         onPressed: () {
-          signUpC.executeSignUp();
+          if (_formKey.currentState!.validate()) {
+            signUpC.executeSignUp();
+          }
         },
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(double.infinity, AppSize.h50),
@@ -165,21 +193,26 @@ class _SignUpViewState extends State<SignUpView> {
             leadingPadding: AppSize.s8,
             selectorType: PhoneInputSelectorType.DIALOG),
         spaceBetweenSelectorAndTextField: 0,
-        onInputChanged: (value) => () {
-          signUpC.setPhone(value.toString());
+        onInputChanged: (value) {
+          print(value);
+          signUpC.setPhone(value.phoneNumber.orEmpty());
         },
       ),
     );
   }
 
-  _inputFiled(String hint, void Function(String)? change) {
+  _inputFiled(String hint, Function change, Function validateFunction) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Form(
-          child: TextFormField(
+      child: TextFormField(
         decoration: InputDecoration(hintText: hint),
-        onChanged: change,
-      )),
+        onChanged: (value) {
+          change(value);
+        },
+        validator: (value) {
+          return validateFunction();
+        },
+      ),
     );
   }
 

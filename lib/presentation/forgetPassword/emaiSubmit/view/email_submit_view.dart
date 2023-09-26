@@ -41,15 +41,15 @@ class _EmailSubmitViewState extends State<EmailSubmitView> {
       body: BlocBuilder<EmailSubmitCubit, FreezedEmailState>(
         builder: (context, state) {
           if (state.emailSubmitState is EmailLoading) {
-            StateType.popupLoadingState
+            StateScreens.popupLoadingState
                 .getPopupDialog(AppStrings.loading, context);
           }
           if (state.emailSubmitState is EmailSuccess) {
-            StateType.popupSuccessState
-                .getPopupDialog(AppStrings.success, context);
+            StateScreens.SuccesspopupState.getPopupDialog(
+                AppStrings.success, context);
           }
           if (state.emailSubmitState is EmailError) {
-            StateType.popupErrorState.getPopupDialog(
+            StateScreens.popupErrorState.getPopupDialog(
                 state.emailSubmitState.props.first.toString(), context);
           }
           return _body();
