@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
 import 'package:mvvm_shop/presentation/state_render/state_renderer.dart';
 
 extension GetState on StateType {
@@ -56,12 +55,12 @@ executeShowDialog(StateRenderer stateDialog, BuildContext context) {
   if (type == StateType.popupSuccessState ||
       type == StateType.popupErrorState) {
     dismissDialog(context);
-    WidgetsBinding.instance?.addPostFrameCallback((_) => showDialog(
+    WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
           context: context,
           builder: (BuildContext context) => stateDialog,
         ));
   } else {
-    WidgetsBinding.instance?.addPostFrameCallback((_) => showDialog(
+    WidgetsBinding.instance.addPostFrameCallback((_) => showDialog(
           context: context,
           builder: (BuildContext context) => stateDialog,
         ));

@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mvvm_shop/app/di.dart';
-import 'package:mvvm_shop/data/network/failure.dart';
 import 'package:mvvm_shop/domain/use_case/forget_password_use_case.dart';
 import 'package:mvvm_shop/presentation/forgetPassword/emaiSubmit/cubit/email_freezed.dart';
 

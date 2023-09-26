@@ -1,4 +1,3 @@
-import 'package:mvvm_shop/data/requests/requests_body.dart';
 import 'package:retrofit/http.dart';
 import 'package:dio/dio.dart';
 import 'package:mvvm_shop/app/constants.dart';

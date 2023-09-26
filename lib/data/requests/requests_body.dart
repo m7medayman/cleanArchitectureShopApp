@@ -1,8 +1,11 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'requests_body.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UserRequestBody {
   @JsonKey(name: "userName")
   String? userName;
@@ -20,5 +23,12 @@ class UserRequestBody {
   });
   factory UserRequestBody.fromJson(Map<String, dynamic> json) =>
       _$UserRequestBodyFromJson(json);
-  Map<String, dynamic> toJson() => _$UserRequestBodyToJson(this);
+  toJson() {
+    Map<String, dynamic> data = {
+      'fields': {
+        "email": {"stringValue": email}
+      }
+    };
+    return jsonEncode(data);
+  }
 }

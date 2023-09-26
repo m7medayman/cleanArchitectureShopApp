@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -105,11 +104,11 @@ Widget _getDialogContent(List<Widget> dialogContentList) {
   );
 }
 
-Widget _getJsonImage(String _lottieImage) {
+Widget _getJsonImage(String lottieImage) {
   return SizedBox(
     height: AppSize.h100,
     width: AppSize.h100,
-    child: Lottie.asset(_lottieImage),
+    child: Lottie.asset(lottieImage),
   );
 }
 

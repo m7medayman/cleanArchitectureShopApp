@@ -7,7 +7,7 @@ import 'package:mvvm_shop/domain/repositories/repositories.dart';
 import 'package:mvvm_shop/domain/use_case/base_use_case.dart';
 
 class SignUpUseCase extends BaseUseCase<SignUpUseCaseInput, SignUpDomainRes> {
-  Repository _repository;
+  final Repository _repository;
   SignUpUseCase(
     this._repository,
   );

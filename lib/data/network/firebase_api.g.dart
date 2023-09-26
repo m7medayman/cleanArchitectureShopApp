@@ -24,22 +24,21 @@ class _FireBaseServiceClient implements FireBaseServiceClient {
   @override
   Future<UserProfileRes> postUserProfile(
     String userId,
-    Map<String, dynamic> data,
+    dynamic data,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(data);
+    final _data = data;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<UserProfileRes>(Options(
-      method: 'POST',
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'users/${userId}?key=AIzaSyDHcCvtpSzcEjXZtUHi4z46KCLLvxCE8x0',
+              'users/${userId}',
               queryParameters: queryParameters,
               data: _data,
             )

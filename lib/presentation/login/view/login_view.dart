@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mvvm_shop/app/di.dart';
-import 'package:mvvm_shop/domain/use_case/login_usecase.dart';
 import 'package:mvvm_shop/presentation/login/bloc/login_bloc.dart';
 import 'package:mvvm_shop/presentation/login/bloc/login_data.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
@@ -15,7 +12,7 @@ import 'package:mvvm_shop/presentation/state_render/state_renderer.dart';
 import 'package:mvvm_shop/presentation/state_render/state_renderer_imp.dart';
 
 class LoginView extends StatefulWidget {
-  LoginView({super.key});
+  const LoginView({super.key});
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -36,7 +33,7 @@ class _LoginViewState extends State<LoginView> {
         appBar: null,
         body: BlocBuilder<LoginBloc, LoginDataState>(
           builder: (context, state) {
-            final _state = state.authState.props;
+            final state1 = state.authState.props;
             if (state.authState is AuthLoading) {
               StateType.popupLoadingState
                   .getPopupDialog(AppStrings.loading, context);
@@ -44,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
             }
             if (state.authState is AuthFailure) {
               StateType.popupErrorState
-                  .getPopupDialog(_state.first.toString(), context);
+                  .getPopupDialog(state1.first.toString(), context);
               return _body();
             }
             if (state.authState is AuthSuccess) {
@@ -67,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
             children: [
               Image.asset(ImageAssets.splashLogo),
               Padding(
-                padding: EdgeInsets.all(AppSize.s8),
+                padding: const EdgeInsets.all(AppSize.s8),
                 child: BlocBuilder<LoginBloc, LoginDataState>(
                   builder: (context, state) {
                     return Form(
@@ -83,30 +80,31 @@ class _LoginViewState extends State<LoginView> {
                                 if (!state.isEmailFormFieldValid()) {
                                   return "email should contain '@' character";
                                 }
+                                return null;
                               },
                               onChanged: (value) {
                                 context
                                     .read<LoginBloc>()
                                     .add(EmailChanged(email: value));
-                                SchedulerBinding.instance!
+                                SchedulerBinding.instance
                                     .addPostFrameCallback((_) {
                                   _formKey.currentState!.validate();
                                 });
                               },
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                   hintText: AppStrings.emailHint),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: AppSize.h20,
                             ),
                             TextField(
                               onChanged: (value) => context
                                   .read<LoginBloc>()
                                   .add(PasswordChanged(password: value)),
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                   hintText: AppStrings.password),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: AppSize.h20,
                             ),
                             _loginButton(state, context)

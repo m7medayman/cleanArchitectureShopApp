@@ -8,7 +8,6 @@ import 'package:mvvm_shop/presentation/base/base_view_model.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
 import 'package:mvvm_shop/presentation/resources/routs_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingViewModel extends BaseViewModel
     with OnboardingViewModelInput, OnboardingViewModelOutput {

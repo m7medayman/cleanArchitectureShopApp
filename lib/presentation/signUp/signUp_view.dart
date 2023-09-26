@@ -39,7 +39,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   _screenLayout() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppSize.s8),
+      padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
       child: Column(
         children: [_image(), _form()],
       ),
@@ -66,7 +66,7 @@ class _SignUpViewState extends State<SignUpView> {
               _inputFiled(AppStrings.password, (value) {}),
               _phonePicker(),
               stretchedElevatedButton(AppStrings.signUP),
-              SizedBox(
+              const SizedBox(
                 height: AppSize.s20,
               )
             ],
@@ -81,10 +81,10 @@ class _SignUpViewState extends State<SignUpView> {
         onPressed: () {
           signUpC.executeSignUp();
         },
-        child: Text(s),
         style: ElevatedButton.styleFrom(
-          minimumSize: Size(double.infinity, AppSize.h50),
-        ));
+          minimumSize: const Size(double.infinity, AppSize.h50),
+        ),
+        child: Text(s));
   }
 
   _avatar() {
@@ -96,7 +96,7 @@ class _SignUpViewState extends State<SignUpView> {
           radius: AppSize.h50,
           child: Container(
             child: imageFile == null
-                ? Icon(
+                ? const Icon(
                     Icons.add_a_photo_sharp,
                     size: AppSize.s30,
                   )
@@ -123,12 +123,12 @@ class _SignUpViewState extends State<SignUpView> {
 
   Future<dynamic> _bottomSheet() {
     return showModalBottomSheet(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15), topRight: Radius.circular(15))),
         context: context,
         builder: (BuildContext context) {
-          return Container(
+          return SizedBox(
             height: AppSize.h150,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +138,7 @@ class _SignUpViewState extends State<SignUpView> {
                 Padding(
                     padding: const EdgeInsets.all(AppSize.s8),
                     child: ElevatedButton(
-                      child: Text("camera"),
+                      child: const Text("camera"),
                       onPressed: () async {
                         await _pickImageCamera();
                       },
@@ -146,7 +146,7 @@ class _SignUpViewState extends State<SignUpView> {
                 Padding(
                   padding: const EdgeInsets.all(AppSize.s8),
                   child: ElevatedButton(
-                    child: Text("gallery"),
+                    child: const Text("gallery"),
                     onPressed: () async {},
                   ),
                 )
@@ -184,21 +184,21 @@ class _SignUpViewState extends State<SignUpView> {
   }
 
   _pickImageCamera() async {
-    XFile? _imageXfile = await _picker
+    XFile? imageXfile = await _picker
         .pickImage(source: ImageSource.camera)
         .whenComplete(() => Navigator.of(context).pop());
-    if (_imageXfile != null) {
+    if (imageXfile != null) {
       setState(() {
-        imageFile = File(_imageXfile.path);
+        imageFile = File(imageXfile.path);
       });
     }
   }
 
   _picImageGallery() async {
-    XFile? _imageXfile = await _picker.pickImage(source: ImageSource.camera);
-    if (_imageXfile != null) {
+    XFile? imageXfile = await _picker.pickImage(source: ImageSource.camera);
+    if (imageXfile != null) {
       setState(() {
-        imageFile = File(_imageXfile.path);
+        imageFile = File(imageXfile.path);
       });
     }
   }

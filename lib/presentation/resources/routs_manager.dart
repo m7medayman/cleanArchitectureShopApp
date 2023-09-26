@@ -23,11 +23,11 @@ class RoutGenerator {
       case Routs.onBoardingRoute:
         return MaterialPageRoute(builder: (_) => const OnboardingView());
       case Routs.loginRoute:
-        return MaterialPageRoute(builder: (_) => LoginView());
+        return MaterialPageRoute(builder: (_) => const LoginView());
       case Routs.forgetPasswordEmailSubmit:
-        return MaterialPageRoute(builder: (_) => EmailSubmitView());
+        return MaterialPageRoute(builder: (_) => const EmailSubmitView());
       case Routs.signUpRoute:
-        return MaterialPageRoute(builder: (_) => SignUpView());
+        return MaterialPageRoute(builder: (_) => const SignUpView());
       default:
         return unDefinedRoute();
     }

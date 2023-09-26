@@ -4,7 +4,6 @@ import 'package:equatable/equatable.dart';
 import 'package:mvvm_shop/app/di.dart';
 import 'package:mvvm_shop/domain/use_case/post_user_data_usecase.dart';
 import 'package:mvvm_shop/domain/use_case/signUp_use_case.dart';
-import 'package:mvvm_shop/presentation/login/bloc/login_bloc.dart';
 import 'package:mvvm_shop/presentation/signUp/cubit/form_state.dart';
 
 part 'sign_up_state.dart';
@@ -50,9 +49,19 @@ class SignUpCubit extends Cubit<SignUpState> {
     await _signUpApi
         .execute(SignUpUseCaseInput(state.email, state.password))
         .fold((signUpError) {
-      print(signUpError);
+      emit(state.copyWith(
+          signUpFormState: FormStateFailure(signUpError.massage)));
     }, (domainRes) async {
-      print(domainRes.toString());
+      print("!!!!!!!!!!!!!!!!!");
+      print(domainRes.email == '' ? 'empty' : domainRes.email);
+      _postUserData
+          .execute(PostDataUseCaseInput("r787lBhh5axJefvxSjTh", state.email, '',
+              state.phone, state.userName))
+          .fold((left) {
+        emit(state.copyWith(signUpFormState: FormStateFailure(left.massage)));
+      }, (right) {
+        emit(state.copyWith(signUpFormState: FormStateSuccess()));
+      });
     });
   }
 }

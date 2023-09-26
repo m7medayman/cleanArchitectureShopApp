@@ -15,7 +15,7 @@ class DioFactory {
   DioFactory({
     required this.preferences,
   });
-  getDio() async {
+  getDio(baseURL) async {
     final Dio dio = Dio();
     Map<String, String> headers = {
       contentType: applicationJson,
@@ -23,7 +23,7 @@ class DioFactory {
       language: await preferences.getAppLanguage(),
     };
     dio.options = BaseOptions(
-      baseUrl: AppConstants.baseUrl, // replace with your base URL
+      baseUrl: baseURL, // replace with your base URL
       headers: headers,
       sendTimeout: AppConstants.apiTimeOut,
       receiveTimeout: AppConstants.apiTimeOut,
@@ -35,6 +35,7 @@ class DioFactory {
         requestHeader: true,
         requestBody: true,
         responseHeader: true,
+        responseBody: true,
       ));
     }
     return dio;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mvvm_shop/app/di.dart';
 import 'package:mvvm_shop/model/models.dart';
 import 'package:mvvm_shop/presentation/onboarding/viewmodel/onboarding_view_model.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';

@@ -18,7 +18,7 @@ extension SignUpResMapper on SignUpRes? {
         email: (this?.email).orEmpty(),
         idToken: (this?.idToken).orEmpty(),
         expiresIn: (this?.expiresIn).orEmpty(),
-        localld: (this?.localld).orEmpty(),
+        localId: (this?.localId).orEmpty(),
         refreshToken: (this?.refreshToken).orEmpty());
   }
 }

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class ApiResponse {
   String idToken;
   String expiresIn;
@@ -22,10 +20,10 @@ class ApiMessage extends ApiResponse {
 
 class SignUpDomainRes extends ApiResponse {
   String email;
-  String localld;
+  String localId;
   SignUpDomainRes(
       {required this.email,
-      required this.localld,
+      required this.localId,
       required String expiresIn,
       required String idToken,
       required String refreshToken})

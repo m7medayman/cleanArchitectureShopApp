@@ -13,7 +13,7 @@ class InitFormState extends SignUpFormState {
 
 class FormStateFailure extends SignUpFormState {
   final String errorMessage;
-  FormStateFailure(this.errorMessage);
+  const FormStateFailure(this.errorMessage);
   @override
   List<Object?> get props => [errorMessage];
 }

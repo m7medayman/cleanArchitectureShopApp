@@ -3,7 +3,6 @@ import 'package:mvvm_shop/data/model/requests_model.dart';
 import 'package:mvvm_shop/data/model/responses.dart';
 import 'package:mvvm_shop/data/network/failure.dart';
 import 'package:mvvm_shop/data/responses/responses.dart';
-import 'package:mvvm_shop/model/models.dart';
 
 abstract class Repository {
   Future<Either<Failure, ApiMessage>> login(LoginRequest loginRequest);

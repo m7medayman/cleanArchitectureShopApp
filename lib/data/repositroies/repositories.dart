@@ -1,5 +1,4 @@
 import 'package:either_dart/src/either.dart';
-import 'package:flutter/foundation.dart';
 import 'package:mvvm_shop/data/data_source/remote_data_source.dart';
 import 'package:mvvm_shop/data/mappers/mappers.dart';
 import 'package:mvvm_shop/data/model/requests_model.dart';
@@ -9,7 +8,6 @@ import 'package:mvvm_shop/data/network/failure.dart';
 import 'package:mvvm_shop/data/network/network_info.dart';
 import 'package:mvvm_shop/data/responses/responses.dart';
 import 'package:mvvm_shop/domain/repositories/repositories.dart';
-import 'package:mvvm_shop/model/models.dart';
 
 class RepositoryImp implements Repository {
   final Network _networkInfo;
@@ -83,7 +81,7 @@ class RepositoryImp implements Repository {
     if (await _networkInfo.isConnected()) {
       try {
         final response = await executeFunction(signUpRequest);
-
+        print(response);
         if (response.error == null) {
           return Right(toDomainGeneral(response));
         } else {

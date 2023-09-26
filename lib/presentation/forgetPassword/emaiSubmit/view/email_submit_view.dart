@@ -1,8 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mvvm_shop/app/di.dart';
 import 'package:mvvm_shop/presentation/forgetPassword/emaiSubmit/cubit/email_freezed.dart';
 import 'package:mvvm_shop/presentation/forgetPassword/emaiSubmit/cubit/email_submit_cubit.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
@@ -14,7 +11,7 @@ import 'package:mvvm_shop/presentation/state_render/state_renderer.dart';
 import 'package:mvvm_shop/presentation/state_render/state_renderer_imp.dart';
 
 class EmailSubmitView extends StatefulWidget {
-  EmailSubmitView({super.key});
+  const EmailSubmitView({super.key});
 
   @override
   State<EmailSubmitView> createState() => _EmailSubmitViewState();

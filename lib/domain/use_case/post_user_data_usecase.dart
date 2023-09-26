@@ -7,7 +7,7 @@ import 'package:mvvm_shop/domain/use_case/base_use_case.dart';
 
 class PostUserDataUseCase
     extends BaseUseCase<PostDataUseCaseInput, UserProfileRes> {
-  Repository _repository;
+  final Repository _repository;
   PostUserDataUseCase(this._repository);
   @override
   Future<Either<Failure, UserProfileRes>> execute(PostDataUseCaseInput input) {

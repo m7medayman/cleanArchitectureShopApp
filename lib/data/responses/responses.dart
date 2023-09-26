@@ -28,9 +28,9 @@ class SimpleMessageRes extends BasicResponse {
 class SignUpRes extends BasicResponse {
   @JsonKey(name: "email")
   String? email;
-  @JsonKey(name: "localld")
-  String? localld;
-  SignUpRes({this.email, this.localld});
+  @JsonKey(name: "localId")
+  String? localId;
+  SignUpRes({this.email, this.localId});
   factory SignUpRes.fromJson(Map<String, dynamic> json) =>
       _$SignUpResFromJson(json);
   Map<String, dynamic> toJson() => _$SignUpResToJson(this);

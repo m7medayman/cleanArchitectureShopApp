@@ -42,7 +42,7 @@ Map<String, dynamic> _$SimpleMessageResToJson(SimpleMessageRes instance) =>
 
 SignUpRes _$SignUpResFromJson(Map<String, dynamic> json) => SignUpRes(
       email: json['email'] as String?,
-      localld: json['localld'] as String?,
+      localId: json['localId'] as String?,
     )
       ..error = json['error'] == null
           ? null
@@ -57,7 +57,7 @@ Map<String, dynamic> _$SignUpResToJson(SignUpRes instance) => <String, dynamic>{
       'expiresIn': instance.expiresIn,
       'refreshToken': instance.refreshToken,
       'email': instance.email,
-      'localld': instance.localld,
+      'localId': instance.localId,
     };
 
 Error _$ErrorFromJson(Map<String, dynamic> json) =>

@@ -5,7 +5,6 @@ import 'package:mvvm_shop/data/model/responses.dart';
 import 'package:mvvm_shop/data/network/failure.dart';
 import 'package:mvvm_shop/domain/repositories/repositories.dart';
 import 'package:mvvm_shop/domain/use_case/base_use_case.dart';
-import 'package:mvvm_shop/model/models.dart';
 
 class LoginUseCase implements BaseUseCase<LoginUseCaseInput, ApiMessage> {
   final Repository _repository;

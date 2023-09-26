@@ -20,6 +20,7 @@ class RemoteDataImpl implements RemoteData {
   RemoteDataImpl(this._appServiceClient, this._fireBaseServiceClient);
   @override
   Future<SimpleMessageRes> login(LoginRequest loginRequest) {
+    print("go to app");
     return _appServiceClient.login(loginRequest.email, loginRequest.password);
   }
 
