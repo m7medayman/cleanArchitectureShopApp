@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm_shop/presentation/Home/main.dart';
 import 'package:mvvm_shop/presentation/forgetPassword/emaiSubmit/view/email_submit_view.dart';
 import 'package:mvvm_shop/presentation/login/view/login_view.dart';
 import 'package:mvvm_shop/presentation/signUp/view/signUp_view.dart';
@@ -11,6 +12,7 @@ class Routs {
   static const String onBoardingRoute = 'onBoarding';
   static const String loginRoute = 'login';
   static const String signUpRoute = 'signUp';
+  static const String home = 'home';
   static const String forgetPasswordEmailSubmit = 'emailSubmit';
   static const String forgetPasswordCodeSubmit = 'codeSubmit';
 }
@@ -28,6 +30,8 @@ class RoutGenerator {
         return MaterialPageRoute(builder: (_) => const EmailSubmitView());
       case Routs.signUpRoute:
         return MaterialPageRoute(builder: (_) => const SignUpView());
+      case Routs.home:
+        return MaterialPageRoute(builder: (_) => const HomeMainView());
       default:
         return unDefinedRoute();
     }
