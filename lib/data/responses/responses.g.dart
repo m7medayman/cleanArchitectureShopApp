@@ -8,57 +8,77 @@ part of 'responses.dart';
 
 BasicResponse _$BasicResponseFromJson(Map<String, dynamic> json) =>
     BasicResponse()
-      ..status = json['status'] as int?
-      ..message = json['message'] as String?;
+      ..error = json['error'] == null
+          ? null
+          : Error.fromJson(json['error'] as Map<String, dynamic>)
+      ..idToken = json['idToken'] as String?
+      ..expiresIn = json['expiresIn'] as String?
+      ..refreshToken = json['refreshToken'] as String?;
 
 Map<String, dynamic> _$BasicResponseToJson(BasicResponse instance) =>
     <String, dynamic>{
-      'status': instance.status,
-      'message': instance.message,
+      'error': instance.error,
+      'idToken': instance.idToken,
+      'expiresIn': instance.expiresIn,
+      'refreshToken': instance.refreshToken,
     };
 
-ContactsRes _$ContactsResFromJson(Map<String, dynamic> json) => ContactsRes(
-      json['phone'] as String?,
-      json['email'] as String?,
-      json['link'] as String?,
-    );
-
-Map<String, dynamic> _$ContactsResToJson(ContactsRes instance) =>
-    <String, dynamic>{
-      'phone': instance.phone,
-      'email': instance.email,
-      'link': instance.link,
-    };
-
-CustomerRes _$CustomerResFromJson(Map<String, dynamic> json) => CustomerRes(
-      json['name'] as String?,
-      json['id'] as int?,
-      json['numberOfNotifications'] as int?,
-    );
-
-Map<String, dynamic> _$CustomerResToJson(CustomerRes instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'id': instance.id,
-      'numberOfNotifications': instance.numberOfNotifications,
-    };
-
-AuthenticationRes _$AuthenticationResFromJson(Map<String, dynamic> json) =>
-    AuthenticationRes(
-      customer: json['customer'] == null
+SimpleMessageRes _$SimpleMessageResFromJson(Map<String, dynamic> json) =>
+    SimpleMessageRes()
+      ..error = json['error'] == null
           ? null
-          : CustomerRes.fromJson(json['customer'] as Map<String, dynamic>),
-      contacts: json['contacts'] == null
-          ? null
-          : ContactsRes.fromJson(json['contacts'] as Map<String, dynamic>),
+          : Error.fromJson(json['error'] as Map<String, dynamic>)
+      ..idToken = json['idToken'] as String?
+      ..expiresIn = json['expiresIn'] as String?
+      ..refreshToken = json['refreshToken'] as String?;
+
+Map<String, dynamic> _$SimpleMessageResToJson(SimpleMessageRes instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'idToken': instance.idToken,
+      'expiresIn': instance.expiresIn,
+      'refreshToken': instance.refreshToken,
+    };
+
+SignUpRes _$SignUpResFromJson(Map<String, dynamic> json) => SignUpRes(
+      email: json['email'] as String?,
+      localId: json['localId'] as String?,
     )
-      ..status = json['status'] as int?
-      ..message = json['message'] as String?;
+      ..error = json['error'] == null
+          ? null
+          : Error.fromJson(json['error'] as Map<String, dynamic>)
+      ..idToken = json['idToken'] as String?
+      ..expiresIn = json['expiresIn'] as String?
+      ..refreshToken = json['refreshToken'] as String?;
 
-Map<String, dynamic> _$AuthenticationResToJson(AuthenticationRes instance) =>
+Map<String, dynamic> _$SignUpResToJson(SignUpRes instance) => <String, dynamic>{
+      'error': instance.error,
+      'idToken': instance.idToken,
+      'expiresIn': instance.expiresIn,
+      'refreshToken': instance.refreshToken,
+      'email': instance.email,
+      'localId': instance.localId,
+    };
+
+Error _$ErrorFromJson(Map<String, dynamic> json) =>
+    Error()..error = json['error'] as Map<String, dynamic>?;
+
+Map<String, dynamic> _$ErrorToJson(Error instance) => <String, dynamic>{
+      'error': instance.error,
+    };
+
+UserProfileRes _$UserProfileResFromJson(Map<String, dynamic> json) =>
+    UserProfileRes(
+      error: json['error'] == null
+          ? null
+          : Error.fromJson(json['error'] as Map<String, dynamic>),
+      createTime: json['createTime'] as String?,
+      updateTime: json['updateTime'] as String?,
+    );
+
+Map<String, dynamic> _$UserProfileResToJson(UserProfileRes instance) =>
     <String, dynamic>{
-      'status': instance.status,
-      'message': instance.message,
-      'customer': instance.customer,
-      'contacts': instance.contacts,
+      'error': instance.error,
+      'createTime': instance.createTime,
+      'updateTime': instance.updateTime,
     };

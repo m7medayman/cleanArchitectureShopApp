@@ -10,3 +10,11 @@ class ImageAssets {
   static const String hollowImage = '${_imagePath}hollow_cirlce_ic.svg';
   static const String solidCircle = '${_imagePath}solid_circle_ic.svg';
 }
+
+class LottieAssets {
+static const String _lottieAssets = 'assets/json';
+static const String loading = '$_lottieAssets/loading.json';
+static const String error = '$_lottieAssets/error.json';
+static const String success = '$_lottieAssets/success.json';
+static const String empty ='$_lottieAssets/empty.json';
+}

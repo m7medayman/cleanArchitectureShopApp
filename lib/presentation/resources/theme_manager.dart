@@ -7,6 +7,7 @@ import 'package:mvvm_shop/presentation/resources/values_manager.dart';
 ThemeData getAppTheme() {
   return ThemeData(
     // main theme
+
     primaryColor: ColorManager.primary,
     primaryColorLight: ColorManager.primary,
     primaryColorDark: ColorManager.darkPrimary,
@@ -56,21 +57,22 @@ ThemeData getAppTheme() {
       labelSmall: getBoldStyle(FontColor: ColorManager.primary),
     ),
     inputDecorationTheme: InputDecorationTheme(
+      fillColor: ColorManager.white,
       hintStyle: getRegularStyle(FontColor: ColorManager.grey),
       labelStyle: getRegularStyle(FontColor: ColorManager.grey),
       errorStyle: getRegularStyle(FontColor: ColorManager.error),
-      enabledBorder: OutlineInputBorder(
+      enabledBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1_5),
-          borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8))),
-      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
+      focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1_5),
-          borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8))),
-      errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
+      errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1_5),
-          borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8))),
-      focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
+      focusedErrorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1_5),
-          borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8))),
+          borderRadius: BorderRadius.all(Radius.circular(AppSize.s8))),
     ),
   );
 }

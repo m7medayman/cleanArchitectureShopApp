@@ -8,7 +8,6 @@ import 'package:mvvm_shop/presentation/resources/font_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
 import 'package:mvvm_shop/presentation/resources/styles_manager.dart';
 import 'package:mvvm_shop/presentation/resources/values_manager.dart';
-import 'package:flutter/services.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -35,38 +34,46 @@ class _OnboardingViewState extends State<OnboardingView> {
           print(snapshot.data);
           return Scaffold(
             backgroundColor: ColorManager.white,
-            body: PageView.builder(
-              itemCount: snapshot.data!.sliderCount,
-              onPageChanged: (index) => {viewModel.pageChange(index)},
-              controller: controller,
-              itemBuilder: ((context, index) => Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          snapshot.data!.sliderObject.title,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        const SizedBox(
-                          height: AppSize.h20,
-                        ),
-                        Text(
-                          snapshot.data!.sliderObject.subTitle,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        const SizedBox(
-                          height: AppSize.h50,
-                        ),
-                        SvgPicture.asset(
-                          snapshot.data!.sliderObject.image,
-                        )
-                      ],
-                    ),
-                  )),
-            ),
-            bottomSheet: _bottomSheet(context, snapshot.data!.currentSlide),
+            body: snapshot.hasData
+                ? _pageView(snapshot)
+                : const CircularProgressIndicator(),
+            bottomSheet: snapshot.hasData
+                ? _bottomSheet(context, snapshot.data!.currentSlide)
+                : Container(),
           );
         });
+  }
+
+  PageView _pageView(AsyncSnapshot<SlidersView> snapshot) {
+    return PageView.builder(
+      itemCount: snapshot.data?.sliderCount,
+      onPageChanged: (index) => {viewModel.pageChange(index)},
+      controller: controller,
+      itemBuilder: ((context, index) => Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  snapshot.data!.sliderObject.title,
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
+                const SizedBox(
+                  height: AppSize.h20,
+                ),
+                Text(
+                  snapshot.data!.sliderObject.subTitle,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(
+                  height: AppSize.h50,
+                ),
+                SvgPicture.asset(
+                  snapshot.data!.sliderObject.image,
+                )
+              ],
+            ),
+          )),
+    );
   }
 
   Container _bottomSheet(BuildContext context, currentIndx) {
@@ -78,7 +85,9 @@ class _OnboardingViewState extends State<OnboardingView> {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                viewModel.skipButton(context);
+              },
               child: Text(
                 AppStrings.skip,
                 style: getMediumStyle(
@@ -115,7 +124,8 @@ class _OnboardingViewState extends State<OnboardingView> {
     return InkWell(
       onTap: () {
         controller.animateToPage(viewModel.goNext(),
-            duration: Duration(microseconds: 400), curve: Curves.easeInSine);
+            duration: const Duration(microseconds: 400),
+            curve: Curves.easeInSine);
       }, // the gonext func
       child: SizedBox(
         height: AppSize.s20,
@@ -149,7 +159,8 @@ class _OnboardingViewState extends State<OnboardingView> {
     return GestureDetector(
       onTap: () {
         controller.animateToPage(viewModel.goPrevious(),
-            duration: Duration(microseconds: 400), curve: Curves.easeInSine);
+            duration: const Duration(microseconds: 400),
+            curve: Curves.easeInSine);
       }, // the go previous func
       child: RotatedBox(
         quarterTurns: 2,

@@ -1,8 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:mvvm_shop/app/app_prefs.dart';
+import 'package:mvvm_shop/app/di.dart';
 import 'package:mvvm_shop/model/models.dart';
 import 'package:mvvm_shop/presentation/base/base_view_model.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
+import 'package:mvvm_shop/presentation/resources/routs_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
 
 class OnboardingViewModel extends BaseViewModel
@@ -59,7 +63,7 @@ class OnboardingViewModel extends BaseViewModel
   }
 
   @override
-  void start() {
+  Future start() async {
     _pages = _getPages();
     _postData();
     print(_pages[_current]);
@@ -78,12 +82,20 @@ class OnboardingViewModel extends BaseViewModel
           AppStrings.onBoardingTitle4),
     ];
   }
+
+  @override
+  Future skipButton(BuildContext context) async {
+    // TODO: implement skipButton
+    await instance<AppPreferences>().setFirstTimeUseAppFalse();
+    Navigator.of(context).pushReplacementNamed(Routs.loginRoute);
+  }
 }
 
 abstract class OnboardingViewModelInput {
   int goNext();
   int goPrevious();
   void pageChange(int index);
+  Future skipButton(BuildContext context);
   Sink get inputSliderViewObject;
 }
 

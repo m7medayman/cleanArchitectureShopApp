@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:mvvm_shop/app/app_prefs.dart';
+import 'package:mvvm_shop/app/di.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
 import 'package:mvvm_shop/presentation/resources/color_manager.dart';
 import 'package:mvvm_shop/presentation/resources/constant_manager.dart';
@@ -14,9 +16,17 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  final AppPreferences _appPref = instance<AppPreferences>();
   Timer? _timer;
   _goNext() async {
-    await Navigator.pushReplacementNamed(context, Routs.onBoardingRoute);
+    bool firstTime = await _appPref.getFirstTimeUseApp();
+    if (firstTime) {
+      if (!context.mounted) return;
+      Navigator.pushReplacementNamed(context, Routs.onBoardingRoute);
+    } else {
+      if (!context.mounted) return;
+      Navigator.pushReplacementNamed(context, Routs.loginRoute);
+    }
   }
 
   void _startDelay() {

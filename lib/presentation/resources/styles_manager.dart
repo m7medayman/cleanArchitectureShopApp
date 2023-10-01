@@ -17,7 +17,7 @@ TextStyle _getTextStyle(
 // regular style
 TextStyle getRegularStyle(
     {Color FontColor = ColorManager.grey1,
-    double size = FontSize.s12,
+    double size = FontSize.s14,
     FontWeight weight = FontWeightManager.regular}) {
   return _getTextStyle(FontColor, size, weight);
 }
