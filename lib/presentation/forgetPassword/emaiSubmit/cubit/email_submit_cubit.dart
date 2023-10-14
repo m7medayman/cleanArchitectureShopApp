@@ -22,7 +22,7 @@ class EmailSubmitCubit extends Cubit<FreezedEmailState> {
   onEmailSubmitting() {
     emit(state.copyWith(emailSubmitState: EmailLoading()));
     emailUseCase.execute(EmailSubmitUseCaseInput(state.email)).fold((left) {
-      emit(state.copyWith(emailSubmitState: EmailError(left.massage)));
+      emit(state.copyWith(emailSubmitState: EmailError(left.message)));
     }, (right) {
       emit(state.copyWith(emailSubmitState: EmailSuccess()));
     });

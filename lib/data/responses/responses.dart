@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:mvvm_shop/app/extensions.dart';
+import 'package:mvvm_shop/data/to_domain_model/responses.dart';
 
 part 'responses.g.dart';
 
@@ -63,4 +64,22 @@ class UserProfileRes {
   factory UserProfileRes.fromJson(Map<String, dynamic> json) =>
       _$UserProfileResFromJson(json);
   Map<String, dynamic> toJson() => _$UserProfileResToJson(this);
+}
+
+class BunchOfServicesRes {
+  List<DomainServiceRes>? servicesRes;
+  BunchOfServicesRes(this.servicesRes);
+}
+
+class DetailsRes {
+  String? details;
+  String? aboutStore;
+  String? services;
+  String? imageUrl;
+  DetailsRes({
+    this.imageUrl,
+    this.details,
+    this.aboutStore,
+    this.services,
+  });
 }

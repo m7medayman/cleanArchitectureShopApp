@@ -12,6 +12,10 @@ class AppSize {
   static const double h20 = 20;
   static const double h100 = 100;
   static const double h150 = 150;
+  static const double h200 = 200;
+  static const double h250 = 250;
+  static const double h125 = 125;
+
   static const double v50 = 50;
   static const double v20 = 20;
   static const double v100 = 100;

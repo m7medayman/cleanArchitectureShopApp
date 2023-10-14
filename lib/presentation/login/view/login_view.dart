@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:mvvm_shop/presentation/login/bloc/login_bloc.dart';
 import 'package:mvvm_shop/presentation/login/bloc/login_data.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
 import 'package:mvvm_shop/presentation/resources/color_manager.dart';
+import 'package:mvvm_shop/presentation/resources/routs_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
 import 'package:mvvm_shop/presentation/resources/styles_manager.dart';
 import 'package:mvvm_shop/presentation/resources/values_manager.dart';
@@ -36,7 +38,7 @@ class _LoginViewState extends State<LoginView> {
             final state1 = state.authState.props;
             if (state.authState is AuthLoading) {
               StateScreens.popupLoadingState
-                  .getPopupDialog(AppStrings.loading, context);
+                  .getPopupDialog(AppStrings.loading.tr(), context);
               return _body();
             }
             if (state.authState is AuthFailure) {
@@ -46,7 +48,8 @@ class _LoginViewState extends State<LoginView> {
             }
             if (state.authState is AuthSuccess) {
               StateScreens.SuccesspopupState.getPopupDialog(
-                  AppStrings.success, context);
+                  AppStrings.success.tr(), context);
+
               return _body();
             }
             return _body();
@@ -91,8 +94,8 @@ class _LoginViewState extends State<LoginView> {
                                   _formKey.currentState!.validate();
                                 });
                               },
-                              decoration: const InputDecoration(
-                                  hintText: AppStrings.emailHint),
+                              decoration: InputDecoration(
+                                  hintText: AppStrings.emailHint.tr()),
                             ),
                             const SizedBox(
                               height: AppSize.h20,
@@ -101,8 +104,8 @@ class _LoginViewState extends State<LoginView> {
                               onChanged: (value) => context
                                   .read<LoginBloc>()
                                   .add(PasswordChanged(password: value)),
-                              decoration: const InputDecoration(
-                                  hintText: AppStrings.password),
+                              decoration: InputDecoration(
+                                  hintText: AppStrings.password.tr()),
                             ),
                             const SizedBox(
                               height: AppSize.h20,
@@ -127,13 +130,16 @@ class _LoginViewState extends State<LoginView> {
                                   .add(ForgotPasswordPressed());
                             },
                             child: Text(
-                              AppStrings.forgetPassword,
+                              AppStrings.forgetPassword.tr(),
                               style: getSemiBoldStyle()
                                   .copyWith(color: ColorManager.primary),
                             )),
                         TextButton(
-                            onPressed: () {},
-                            child: Text(AppStrings.forgetPassword,
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(Routs.signUpRoute);
+                            },
+                            child: Text(AppStrings.signUP.tr(),
                                 style: getSemiBoldStyle()
                                     .copyWith(color: ColorManager.primary)))
                       ],
@@ -156,7 +162,7 @@ class _LoginViewState extends State<LoginView> {
         child: Padding(
           padding: const EdgeInsets.all(AppSize.s10),
           child: Text(
-            AppStrings.login,
+            AppStrings.login.tr(),
             style: getBoldStyle().copyWith(color: ColorManager.white),
           ),
         ));

@@ -1,10 +1,12 @@
 import 'package:mvvm_shop/app/extensions.dart';
-import 'package:mvvm_shop/data/model/responses.dart';
+import 'package:mvvm_shop/data/to_domain_model/responses.dart';
+import 'package:mvvm_shop/data/responses/responses.dart';
+import 'package:mvvm_shop/data/responses/responses.dart';
 import 'package:mvvm_shop/data/responses/responses.dart';
 
 extension ApiMessageMapper on SimpleMessageRes? {
-  ApiMessage toDomain() {
-    return ApiMessage(
+  DomainApiMessage toDomain() {
+    return DomainApiMessage(
       idToken: (this?.refreshToken).orEmpty(),
       expiresIn: (this?.expiresIn).orEmpty(),
       refreshToken: (this?.refreshToken).orEmpty(),
@@ -13,8 +15,8 @@ extension ApiMessageMapper on SimpleMessageRes? {
 }
 
 extension SignUpResMapper on SignUpRes? {
-  SignUpDomainRes toDomain() {
-    return SignUpDomainRes(
+  DomainSignUpDomainRes toDomain() {
+    return DomainSignUpDomainRes(
         email: (this?.email).orEmpty(),
         idToken: (this?.idToken).orEmpty(),
         expiresIn: (this?.expiresIn).orEmpty(),
@@ -27,17 +29,41 @@ abstract class Mapper<I, O> {
   O toDomain();
 }
 
-class SimpleMessageMapper implements Mapper<SimpleMessageRes?, ApiMessage> {
+class SimpleMessageMapper
+    implements Mapper<SimpleMessageRes?, DomainApiMessage> {
   SimpleMessageRes? input;
   SimpleMessageMapper({
     this.input,
   });
   @override
-  ApiMessage toDomain() {
-    return ApiMessage(
+  DomainApiMessage toDomain() {
+    return DomainApiMessage(
         expiresIn: (input?.expiresIn).orEmpty(),
         idToken: (input?.idToken).orEmpty(),
         refreshToken: (input?.refreshToken).orEmpty());
+  }
+}
+
+class DetailsResMapper implements Mapper<DetailsRes, DomainDetailsRes> {
+  DetailsRes input;
+  DetailsResMapper(this.input);
+  @override
+  DomainDetailsRes toDomain() {
+    return DomainDetailsRes(
+        imageUrl: input.imageUrl.orEmpty(),
+        details: input.details.orEmpty(),
+        aboutStore: input.aboutStore.orEmpty(),
+        services: input.services.orEmpty());
+  }
+}
+
+class BunchOfServicesResMapper
+    implements Mapper<BunchOfServicesRes, DomainBunchOfServicesRes> {
+  BunchOfServicesRes? input;
+  BunchOfServicesResMapper(this.input);
+  @override
+  DomainBunchOfServicesRes toDomain() {
+    return DomainBunchOfServicesRes(input?.servicesRes ?? []);
   }
 }
 

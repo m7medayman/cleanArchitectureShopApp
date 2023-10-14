@@ -11,7 +11,6 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginDataState> {
   BuildContext context;
-
   LoginBloc({required this.context})
       : super(LoginDataState(
             email: '', password: '', authState: const AuthInitial())) {
@@ -43,13 +42,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginDataState> {
         (await loginUseCase
                 .execute(LoginUseCaseInput(state.email, state.password)))
             .fold((Failure failure) {
-          print(failure.massage);
+          print(failure.message);
           emit(
-              state.copyWith(authState: AuthFailure(message: failure.massage)));
+              state.copyWith(authState: AuthFailure(message: failure.message)));
         }, (right) {
           emit(state.copyWith(authState: AuthSuccess()));
           Future.delayed(const Duration(seconds: 4), () {
-            Navigator.of(context).pushNamed(Routs.forgetPasswordEmailSubmit);
+            Navigator.of(context).pushReplacementNamed(Routs.home);
           });
         });
       }

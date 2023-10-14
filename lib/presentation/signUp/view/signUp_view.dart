@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,11 +42,11 @@ class _SignUpViewState extends State<SignUpView> {
               }
               if (signUpState is SuccessFormState) {
                 StateScreens.SuccesspopupState.getPopupDialog(
-                    AppStrings.ok, context);
+                    AppStrings.ok.tr(), context);
               }
               if (signUpState is LoadingFormState) {
                 StateScreens.popupLoadingState
-                    .getPopupDialog(AppStrings.loading, context);
+                    .getPopupDialog(AppStrings.loading.tr(), context);
               }
               return _body();
             },
@@ -83,16 +84,16 @@ class _SignUpViewState extends State<SignUpView> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    _inputFiled(AppStrings.username, signUpC.setUserName,
+                    _inputFiled(AppStrings.username.tr(), signUpC.setUserName,
                         state.getUserNameValidatorText),
                     _inputFiled(AppStrings.emailHint, signUpC.setEmail,
                         state.getEmailValidatorText),
-                    _inputFiled(AppStrings.password, signUpC.setPassword,
+                    _inputFiled(AppStrings.password.tr(), signUpC.setPassword,
                         state.getPasswordValidatorText),
                   ],
                 )),
             _phonePicker(),
-            stretchedElevatedButton(AppStrings.signUP),
+            stretchedElevatedButton(AppStrings.signUP.tr()),
             const SizedBox(
               height: AppSize.s20,
             )
@@ -112,7 +113,7 @@ class _SignUpViewState extends State<SignUpView> {
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(double.infinity, AppSize.h50),
         ),
-        child: Text(s));
+        child: Text(s.tr()));
   }
 
   _avatar() {

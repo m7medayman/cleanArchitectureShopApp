@@ -1,4 +1,4 @@
-import 'package:mvvm_shop/data/model/requests_model.dart';
+import 'package:mvvm_shop/data/to_domain_model/requests_model.dart';
 import 'package:mvvm_shop/data/network/app_api.dart';
 import 'package:mvvm_shop/data/network/firebase_api.dart';
 import 'package:mvvm_shop/data/requests/requests_body.dart';
@@ -12,12 +12,16 @@ abstract class RemoteData {
   Future<SignUpRes> signUp(SignUpRequest signInRequest);
   Future<UserProfileRes> postUserData(
       UserProfileRequest userProfileRequest, String userId);
+  Future<BunchOfServicesRes> fetchServicesData();
+  Future<DetailsRes> fetchDetailsData(String id);
 }
 
 class RemoteDataImpl implements RemoteData {
   final AppServiceClient _appServiceClient;
   final FireBaseServiceClient _fireBaseServiceClient;
-  RemoteDataImpl(this._appServiceClient, this._fireBaseServiceClient);
+  final DataServiceClient _dataServiceClient;
+  RemoteDataImpl(this._appServiceClient, this._fireBaseServiceClient,
+      this._dataServiceClient);
   @override
   Future<SimpleMessageRes> login(LoginRequest loginRequest) {
     print("go to app");
@@ -51,5 +55,15 @@ class RemoteDataImpl implements RemoteData {
                 imageUrl: u.imageUrl,
                 userName: u.userName)
             .toJson());
+  }
+
+  @override
+  Future<BunchOfServicesRes> fetchServicesData() {
+    return _dataServiceClient.fetchHomeServices();
+  }
+
+  @override
+  Future<DetailsRes> fetchDetailsData(String id) {
+    return _dataServiceClient.fetchDetails(id);
   }
 }

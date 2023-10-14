@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mvvm_shop/model/models.dart';
@@ -54,14 +55,14 @@ class _OnboardingViewState extends State<OnboardingView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  snapshot.data!.sliderObject.title,
+                  snapshot.data!.sliderObject.title.tr(),
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(
                   height: AppSize.h20,
                 ),
                 Text(
-                  snapshot.data!.sliderObject.subTitle,
+                  snapshot.data!.sliderObject.subTitle.tr(),
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm_shop/app/di.dart';
+import 'package:mvvm_shop/data/repositroies/repositories.dart';
+import 'package:mvvm_shop/domain/repositories/repositories.dart';
 import 'package:mvvm_shop/presentation/Home/base.dart';
 import 'package:mvvm_shop/presentation/Home/favoritePage/favorite_view.dart';
-import 'package:mvvm_shop/presentation/Home/homePage/home_view.dart';
-import 'package:mvvm_shop/presentation/Home/notificationsPage/notification_view.dart';
+import 'package:mvvm_shop/presentation/Home/homePage/view/home_view.dart';
+import 'package:mvvm_shop/presentation/Home/notificationsPage/setting_view.dart';
 import 'package:mvvm_shop/presentation/Home/searchPage/search_view.dart';
 import 'package:mvvm_shop/presentation/resources/color_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
@@ -16,9 +19,9 @@ class HomeMainView extends StatefulWidget {
 
 class _HomeMainViewState extends State<HomeMainView> {
   int _currentIndex = 0;
-  static final List<BaseViewNavigationBarItem> _pages = [
+  static final List _pages = [
     HomePageView(),
-    NotificationPageView(),
+    SettingsPageView(),
     SearchPageView(),
     FavoritePageView(),
   ];
@@ -36,7 +39,7 @@ class _HomeMainViewState extends State<HomeMainView> {
       appBar: AppBar(
         title: Text(_pages[_currentIndex].getName()),
       ),
-      body: Container(),
+      body: _pages[_currentIndex],
       bottomNavigationBar: Container(
         child: BottomNavigationBar(
           currentIndex: _currentIndex,

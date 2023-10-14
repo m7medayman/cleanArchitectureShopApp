@@ -1,5 +1,5 @@
 import 'package:either_dart/src/either.dart';
-import 'package:mvvm_shop/data/model/requests_model.dart';
+import 'package:mvvm_shop/data/to_domain_model/requests_model.dart';
 import 'package:mvvm_shop/data/network/failure.dart';
 import 'package:mvvm_shop/data/responses/responses.dart';
 import 'package:mvvm_shop/domain/repositories/repositories.dart';
