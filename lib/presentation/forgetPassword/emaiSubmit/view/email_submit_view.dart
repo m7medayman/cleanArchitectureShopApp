@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mvvm_shop/presentation/common/text_widget.dart';
 import 'package:mvvm_shop/presentation/forgetPassword/emaiSubmit/cubit/email_freezed.dart';
 import 'package:mvvm_shop/presentation/forgetPassword/emaiSubmit/cubit/email_submit_cubit.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
@@ -92,8 +94,8 @@ class _EmailSubmitViewState extends State<EmailSubmitView> {
                                     .read<EmailSubmitCubit>()
                                     .onEmailChange(value);
                               },
-                              decoration: const InputDecoration(
-                                  hintText: AppStrings.emailHint),
+                              decoration: InputDecoration(
+                                  hintText: AppStrings.emailHint.tr()),
                             ),
                             const SizedBox(
                               height: AppSize.h20,
@@ -121,7 +123,7 @@ class _EmailSubmitViewState extends State<EmailSubmitView> {
             : null,
         child: Padding(
           padding: const EdgeInsets.all(AppSize.s10),
-          child: Text(
+          child: myText(
             AppStrings.emailSubmit,
             style: getBoldStyle().copyWith(color: ColorManager.white),
           ),

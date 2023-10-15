@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mvvm_shop/model/models.dart';
 import 'package:mvvm_shop/presentation/Home/base.dart';
 import 'package:mvvm_shop/presentation/Home/homePage/cubit/home_cubit.dart';
+import 'package:mvvm_shop/presentation/common/text_widget.dart';
 import 'package:mvvm_shop/presentation/resources/color_manager.dart';
 import 'package:mvvm_shop/presentation/resources/routs_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
@@ -79,7 +80,7 @@ class _HomePageViewState extends State<HomePageView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          myText(
             AppStrings.services,
             style: getBoldStyle().copyWith(color: ColorManager.primary),
           ),
@@ -115,7 +116,7 @@ class _HomePageViewState extends State<HomePageView> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(AppSize.s2),
-                              child: Text(
+                              child: myText(
                                 service.name,
                                 style: getRegularStyle(),
                               ),
@@ -136,7 +137,7 @@ class _HomePageViewState extends State<HomePageView> {
     return Container(
       padding: EdgeInsets.all(AppSize.s8),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(
+        myText(
           AppStrings.stores,
           style: getBoldStyle().copyWith(color: ColorManager.primary),
         ),

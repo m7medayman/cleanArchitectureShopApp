@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mvvm_shop/presentation/common/text_widget.dart';
 import 'package:mvvm_shop/presentation/login/bloc/login_bloc.dart';
 import 'package:mvvm_shop/presentation/login/bloc/login_data.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
@@ -38,7 +39,7 @@ class _LoginViewState extends State<LoginView> {
             final state1 = state.authState.props;
             if (state.authState is AuthLoading) {
               StateScreens.popupLoadingState
-                  .getPopupDialog(AppStrings.loading.tr(), context);
+                  .getPopupDialog(AppStrings.loading, context);
               return _body();
             }
             if (state.authState is AuthFailure) {
@@ -48,7 +49,7 @@ class _LoginViewState extends State<LoginView> {
             }
             if (state.authState is AuthSuccess) {
               StateScreens.SuccesspopupState.getPopupDialog(
-                  AppStrings.success.tr(), context);
+                  AppStrings.success, context);
 
               return _body();
             }
@@ -100,7 +101,7 @@ class _LoginViewState extends State<LoginView> {
                             const SizedBox(
                               height: AppSize.h20,
                             ),
-                            TextField(
+                            TextFormField(
                               onChanged: (value) => context
                                   .read<LoginBloc>()
                                   .add(PasswordChanged(password: value)),
@@ -129,8 +130,8 @@ class _LoginViewState extends State<LoginView> {
                                   .read<LoginBloc>()
                                   .add(ForgotPasswordPressed());
                             },
-                            child: Text(
-                              AppStrings.forgetPassword.tr(),
+                            child: myText(
+                              AppStrings.forgetPassword,
                               style: getSemiBoldStyle()
                                   .copyWith(color: ColorManager.primary),
                             )),
@@ -139,7 +140,7 @@ class _LoginViewState extends State<LoginView> {
                               Navigator.of(context)
                                   .pushNamed(Routs.signUpRoute);
                             },
-                            child: Text(AppStrings.signUP.tr(),
+                            child: myText(AppStrings.signUP,
                                 style: getSemiBoldStyle()
                                     .copyWith(color: ColorManager.primary)))
                       ],
@@ -161,8 +162,8 @@ class _LoginViewState extends State<LoginView> {
             : null,
         child: Padding(
           padding: const EdgeInsets.all(AppSize.s10),
-          child: Text(
-            AppStrings.login.tr(),
+          child: myText(
+            AppStrings.login,
             style: getBoldStyle().copyWith(color: ColorManager.white),
           ),
         ));

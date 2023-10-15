@@ -1,4 +1,6 @@
 import 'package:either_dart/src/either.dart';
+import 'package:mvvm_shop/app/app_prefs.dart';
+import 'package:mvvm_shop/app/di.dart';
 import 'package:mvvm_shop/data/data_source/local_data_source.dart';
 import 'package:mvvm_shop/data/data_source/remote_data_source.dart';
 import 'package:mvvm_shop/data/mappers/mappers.dart';
@@ -14,6 +16,7 @@ class RepositoryImp implements Repository {
   final Network _networkInfo;
   final RemoteData _remoteDataSource;
   final LocalDataSource _localDataSource;
+  final AppPreferences _appPreferences = instance<AppPreferences>();
   RepositoryImp(
       this._networkInfo, this._remoteDataSource, this._localDataSource);
   @override
@@ -65,6 +68,7 @@ class RepositoryImp implements Repository {
       try {
         final response = await _remoteDataSource.signUp(signUpRequest);
         if (response.error == null) {
+          _appPreferences.login();
           return Right(response.toDomain());
         } else {
           return Left(
@@ -86,6 +90,7 @@ class RepositoryImp implements Repository {
         final response = await executeFunction(signUpRequest);
         print(response);
         if (response.error == null) {
+          _appPreferences.login();
           return Right(toDomainGeneral(response));
         } else {
           return Left(

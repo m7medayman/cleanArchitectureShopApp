@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mvvm_shop/model/models.dart';
 import 'package:mvvm_shop/presentation/Home/details/cubit/details_cubit.dart';
+import 'package:mvvm_shop/presentation/common/text_widget.dart';
 import 'package:mvvm_shop/presentation/resources/color_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
 import 'package:mvvm_shop/presentation/resources/styles_manager.dart';
@@ -26,7 +27,7 @@ class _DetailsViewState extends State<DetailsView> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: myText(
           AppStrings.details,
         ),
       ),
@@ -68,11 +69,11 @@ class _DetailsViewState extends State<DetailsView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          myText(
             header,
             style: getBoldStyle().copyWith(color: ColorManager.primary),
           ),
-          Text(
+          myText(
             data,
             style: getRegularStyle(),
           ),

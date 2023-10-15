@@ -20,9 +20,20 @@ class _SplashViewState extends State<SplashView> {
   Timer? _timer;
   _goNext() async {
     bool firstTime = await _appPref.getFirstTimeUseApp();
+
     if (firstTime) {
       if (!context.mounted) return;
       Navigator.pushReplacementNamed(context, Routs.onBoardingRoute);
+    } else {
+      loginCheck();
+    }
+  }
+
+  void loginCheck() async {
+    bool isLogin = await _appPref.getLoginChecker();
+    if (isLogin) {
+      if (!context.mounted) return;
+      Navigator.pushReplacementNamed(context, Routs.home);
     } else {
       if (!context.mounted) return;
       Navigator.pushReplacementNamed(context, Routs.loginRoute);

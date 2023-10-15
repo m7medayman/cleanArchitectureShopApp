@@ -5,8 +5,9 @@ import 'package:mvvm_shop/domain/repositories/repositories.dart';
 import 'package:mvvm_shop/presentation/Home/base.dart';
 import 'package:mvvm_shop/presentation/Home/favoritePage/favorite_view.dart';
 import 'package:mvvm_shop/presentation/Home/homePage/view/home_view.dart';
-import 'package:mvvm_shop/presentation/Home/notificationsPage/setting_view.dart';
+import 'package:mvvm_shop/presentation/Home/settingsPage/setting_view.dart';
 import 'package:mvvm_shop/presentation/Home/searchPage/search_view.dart';
+import 'package:mvvm_shop/presentation/common/text_widget.dart';
 import 'package:mvvm_shop/presentation/resources/color_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
 
@@ -37,7 +38,7 @@ class _HomeMainViewState extends State<HomeMainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_pages[_currentIndex].getName()),
+        title: myText(_pages[_currentIndex].getName()),
       ),
       body: _pages[_currentIndex],
       bottomNavigationBar: Container(

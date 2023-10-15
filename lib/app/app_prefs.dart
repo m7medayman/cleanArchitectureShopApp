@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:mvvm_shop/presentation/resources/language_maneger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +16,25 @@ class AppPreferences {
     } else {
       return firstTimeUseApp;
     }
+  }
+
+  getLoginChecker() async {
+    bool? loginCheck = _sharedPreferences.getBool("LOGIN_CHECK");
+    if (loginCheck == null) {
+      await _sharedPreferences.setBool("LOGIN_CHECK", false);
+      loginCheck = _sharedPreferences.getBool("LOGIN_CHECK");
+      return loginCheck;
+    } else {
+      return loginCheck;
+    }
+  }
+
+  login() async {
+    await _sharedPreferences.setBool("LOGIN_CHECK", true);
+  }
+
+  logout() async {
+    await _sharedPreferences.setBool("LOGIN_CHECK", false);
   }
 
   setAppLanguage(value) async {

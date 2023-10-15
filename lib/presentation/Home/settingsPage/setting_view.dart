@@ -5,6 +5,8 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:mvvm_shop/app/app_prefs.dart';
 import 'package:mvvm_shop/app/di.dart';
 import 'package:mvvm_shop/presentation/Home/base.dart';
+import 'package:mvvm_shop/presentation/common/text_widget.dart';
+import 'package:mvvm_shop/presentation/resources/routs_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
 
 class SettingsPageView extends StatefulWidget with BaseViewNavigationBarItem {
@@ -29,24 +31,39 @@ class SettingsPageView extends StatefulWidget with BaseViewNavigationBarItem {
 }
 
 class _SettingsPageViewState extends State<SettingsPageView> {
+  final AppPreferences _appPreferences = instance<AppPreferences>();
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ListTile(
-          title: Text(AppStrings.changeLanguage.tr()),
-          trailing: Icon(Icons.arrow_back_ios),
+          title: myText(AppStrings.changeLanguage),
+          trailing: const Icon(Icons.arrow_back_ios),
           onTap: () {
             changeLanguage();
           },
           leading: Icon(Icons.language),
+        ),
+        ListTile(
+          title: myText(AppStrings.logout),
+          trailing: const Icon(Icons.arrow_back_ios),
+          onTap: () {
+            logout();
+          },
+          leading: const Icon(Icons.logout),
         )
       ],
     );
   }
 
   changeLanguage() {
-    instance<AppPreferences>().changeLanguage();
+    _appPreferences.changeLanguage();
     Phoenix.rebirth(context);
+  }
+
+  logout() async {
+    await _appPreferences.logout();
+    if (!context.mounted) return;
+    Navigator.of(context).pushReplacementNamed(Routs.loginRoute);
   }
 }
