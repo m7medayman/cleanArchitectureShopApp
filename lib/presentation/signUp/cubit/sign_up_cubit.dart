@@ -54,7 +54,7 @@ class SignUpCubit extends Cubit<SignUpState> {
         .execute(SignUpUseCaseInput(state.email, state.password))
         .fold((signUpError) {
       emit(state.copyWith(
-          signUpFormState: FailureFormState(signUpError.massage)));
+          signUpFormState: FailureFormState(signUpError.message)));
     }, (domainRes) async {
       print("!!!!!!!!!!!!!!!!!");
       print(domainRes.email == '' ? 'empty' : domainRes.email);
@@ -62,7 +62,7 @@ class SignUpCubit extends Cubit<SignUpState> {
           .execute(PostDataUseCaseInput("r787lBhh5axJefvxSjTh", state.email, '',
               state.phone, state.userName))
           .fold((left) {
-        emit(state.copyWith(signUpFormState: FailureFormState(left.massage)));
+        emit(state.copyWith(signUpFormState: FailureFormState(left.message)));
       }, (right) {
         emit(state.copyWith(signUpFormState: SuccessFormState()));
       });

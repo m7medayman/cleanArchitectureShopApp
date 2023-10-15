@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mvvm_shop/model/models.dart';
+import 'package:mvvm_shop/presentation/common/text_widget.dart';
 import 'package:mvvm_shop/presentation/onboarding/viewmodel/onboarding_view_model.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
 import 'package:mvvm_shop/presentation/resources/color_manager.dart';
@@ -53,14 +55,14 @@ class _OnboardingViewState extends State<OnboardingView> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                myText(
                   snapshot.data!.sliderObject.title,
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(
                   height: AppSize.h20,
                 ),
-                Text(
+                myText(
                   snapshot.data!.sliderObject.subTitle,
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
@@ -88,7 +90,7 @@ class _OnboardingViewState extends State<OnboardingView> {
               onPressed: () {
                 viewModel.skipButton(context);
               },
-              child: Text(
+              child: myText(
                 AppStrings.skip,
                 style: getMediumStyle(
                     FontColor: ColorManager.primary, size: FontSize.s16),

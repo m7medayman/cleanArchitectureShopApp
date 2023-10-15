@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:mvvm_shop/app/extensions.dart';
+import 'package:mvvm_shop/presentation/common/text_widget.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
 import 'package:mvvm_shop/presentation/resources/color_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
@@ -112,7 +114,7 @@ class _SignUpViewState extends State<SignUpView> {
         style: ElevatedButton.styleFrom(
           minimumSize: const Size(double.infinity, AppSize.h50),
         ),
-        child: Text(s));
+        child: myText(s));
   }
 
   _avatar() {
@@ -166,7 +168,7 @@ class _SignUpViewState extends State<SignUpView> {
                 Padding(
                     padding: const EdgeInsets.all(AppSize.s8),
                     child: ElevatedButton(
-                      child: const Text("camera"),
+                      child: myText("camera"),
                       onPressed: () async {
                         await _pickImageCamera();
                       },
@@ -174,7 +176,7 @@ class _SignUpViewState extends State<SignUpView> {
                 Padding(
                   padding: const EdgeInsets.all(AppSize.s8),
                   child: ElevatedButton(
-                    child: const Text("gallery"),
+                    child: myText("gallery"),
                     onPressed: () async {},
                   ),
                 )
@@ -205,7 +207,7 @@ class _SignUpViewState extends State<SignUpView> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        decoration: InputDecoration(hintText: hint),
+        decoration: InputDecoration(hintText: hint.tr()),
         onChanged: (value) {
           change(value);
         },

@@ -1,8 +1,11 @@
 import 'package:either_dart/src/either.dart';
+import 'package:mvvm_shop/app/app_prefs.dart';
+import 'package:mvvm_shop/app/di.dart';
+import 'package:mvvm_shop/data/data_source/local_data_source.dart';
 import 'package:mvvm_shop/data/data_source/remote_data_source.dart';
 import 'package:mvvm_shop/data/mappers/mappers.dart';
-import 'package:mvvm_shop/data/model/requests_model.dart';
-import 'package:mvvm_shop/data/model/responses.dart';
+import 'package:mvvm_shop/data/to_domain_model/requests_model.dart';
+import 'package:mvvm_shop/data/to_domain_model/responses.dart';
 import 'package:mvvm_shop/data/network/error_hadler.dart';
 import 'package:mvvm_shop/data/network/failure.dart';
 import 'package:mvvm_shop/data/network/network_info.dart';
@@ -12,30 +15,33 @@ import 'package:mvvm_shop/domain/repositories/repositories.dart';
 class RepositoryImp implements Repository {
   final Network _networkInfo;
   final RemoteData _remoteDataSource;
-
-  RepositoryImp(this._networkInfo, this._remoteDataSource);
+  final LocalDataSource _localDataSource;
+  final AppPreferences _appPreferences = instance<AppPreferences>();
+  RepositoryImp(
+      this._networkInfo, this._remoteDataSource, this._localDataSource);
   @override
-  Future<Either<Failure, ApiMessage>> login(LoginRequest loginRequest) async {
+  Future<Either<Failure, DomainApiMessage>> login(
+      LoginRequest loginRequest) async {
     return executeApiRequest(loginRequest, _remoteDataSource.login);
   }
 
   @override
-  Future<Either<Failure, ApiMessage>> codeSubmit(
+  Future<Either<Failure, DomainApiMessage>> codeSubmit(
       CodeRequest codeRequest) async {
-    Either<Failure, ApiResponse> apiResponse =
+    Either<Failure, DomainApiResponse> apiResponse =
         await _apiRequest(_remoteDataSource.codeSubmit(codeRequest));
-    return apiResponse.map((response) => response as ApiMessage);
+    return apiResponse.map((response) => response as DomainApiMessage);
   }
 
   @override
-  Future<Either<Failure, ApiMessage>> emailSubmit(
+  Future<Either<Failure, DomainApiMessage>> emailSubmit(
       EmailRequest emailRequest) async {
-    Either<Failure, ApiResponse> apiResponse =
+    Either<Failure, DomainApiResponse> apiResponse =
         await _apiRequest(_remoteDataSource.emailSubmit(emailRequest));
-    return apiResponse.map((response) => response as ApiMessage);
+    return apiResponse.map((response) => response as DomainApiMessage);
   }
 
-  Future<Either<Failure, ApiMessage>> _apiRequest(Future request) async {
+  Future<Either<Failure, DomainApiMessage>> _apiRequest(Future request) async {
     if (await _networkInfo.isConnected()) {
       try {
         final response = await request;
@@ -55,13 +61,14 @@ class RepositoryImp implements Repository {
   }
 
   @override
-  Future<Either<Failure, SignUpDomainRes>> signUp(
+  Future<Either<Failure, DomainSignUpDomainRes>> signUp(
       SignUpRequest signUpRequest) async {
     if (await _networkInfo.isConnected()) {
       print("!!!!!!!!!");
       try {
         final response = await _remoteDataSource.signUp(signUpRequest);
         if (response.error == null) {
+          _appPreferences.login();
           return Right(response.toDomain());
         } else {
           return Left(
@@ -83,6 +90,7 @@ class RepositoryImp implements Repository {
         final response = await executeFunction(signUpRequest);
         print(response);
         if (response.error == null) {
+          _appPreferences.login();
           return Right(toDomainGeneral(response));
         } else {
           return Left(
@@ -113,6 +121,43 @@ class RepositoryImp implements Repository {
       } catch (e) {
         print(e.toString());
         return Left(ErrorHandler.handle(e).failure);
+      }
+    } else {
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, DomainBunchOfServicesRes>> fetchServicesData() async {
+    try {
+      DomainBunchOfServicesRes response = _localDataSource.getHomeData();
+      return Right(response);
+    } catch (e) {
+      if (await _networkInfo.isConnected()) {
+        try {
+          var response = await _remoteDataSource.fetchServicesData();
+          print(response.servicesRes);
+          _localDataSource
+              .saveHomeData(BunchOfServicesResMapper(response).toDomain());
+          return Right(BunchOfServicesResMapper(response).toDomain());
+        } catch (e) {
+          return Left(Failure(6, e.toString()));
+        }
+      } else {
+        return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, DomainDetailsRes>> fetchDetailsData(String id) async {
+    if (await _networkInfo.isConnected()) {
+      try {
+        var response = await _remoteDataSource.fetchDetailsData(id);
+        print(response);
+        return Right(DetailsResMapper(response).toDomain());
+      } catch (e) {
+        return Left(Failure(6, e.toString()));
       }
     } else {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());

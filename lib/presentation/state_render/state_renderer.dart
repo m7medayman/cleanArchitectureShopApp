@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:mvvm_shop/presentation/common/text_widget.dart';
 import 'package:mvvm_shop/presentation/resources/assets_manager.dart';
 import 'package:mvvm_shop/presentation/resources/color_manager.dart';
 import 'package:mvvm_shop/presentation/resources/strings_manager.dart';
@@ -73,7 +74,7 @@ Widget _errorPopupDialog(String message, BuildContext context) {
 }
 
 Widget _getDialogMessage(String message) {
-  return Text(
+  return myText(
     message,
     style: getMediumStyle(),
   );
@@ -119,7 +120,7 @@ Widget _getButton(
     required BuildContext context}) {
   return ElevatedButton(
       onPressed: () => pressed(onPressedFunc, isPopup, context),
-      child: Text(
+      child: myText(
         buttonText,
         style: getMediumStyle(),
       ));
